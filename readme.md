@@ -1,6 +1,11 @@
 ## 架构
-利用Golang超强的并发网络处理能力去处理网络层的业务,用js处理业务逻辑以实现热更新
-热更新的方法就是向进程发送 signal-usr2
+- 利用Golang超强的并发网络处理能力去处理网络层的业务,用js处理业务逻辑以实现热更新
+- 热更新的方法就是向进程发送 signal-usr2
+- 基于goroutine,可以轻松实现异步
+
+## 对比
+- 与boost.asio + lua 相比服务器更稳定,极少出现coredump 服务器开发效率也远比c/c++高
+- 与node.js 相比拥有更高的性能,基于goroutine方式实现的异步在使用中也远比基于函数闭包的异步方便,不会出现`回调地狱`
 
 ## 安装方法
 ```
@@ -64,7 +69,9 @@ function onConnect(fd)
 function onMessage(fd,msg)
 ```
 - 当一个连接关闭
+```
 function onClose(fd)
+```
 
 #### 主动调用函数
 
