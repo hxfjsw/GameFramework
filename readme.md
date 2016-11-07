@@ -15,6 +15,8 @@ yum install go
 go get github.com/robertkrimen/otto
 go get github.com/Unknwon/goconfig
 go get github.com/op/go-logging
+go get github.com/garyburd/redigo/redis
+go get github.com/go-sql-driver/mysql
 bash build.sh
 ```
 
