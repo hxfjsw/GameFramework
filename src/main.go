@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"io/ioutil"
 	"os"
 	"github.com/robertkrimen/otto"
@@ -10,6 +9,7 @@ import (
 	"os/signal"
 	"syscall"
 	"github.com/Unknwon/goconfig"
+	"github.com/op/go-logging"
 )
 
 func timer_tick(ttl time.Duration, fun string) {
@@ -32,12 +32,29 @@ var vm *otto.Otto;
 var server *Server
 var hall Room
 
+var log = logging.MustGetLogger("GameFramwork")
+var log_format = logging.MustStringFormatter(
+	`%{color}%{time:15:04:05.000} %{shortfunc} > %{level:.4s} %{id:03x}%{color:reset} %{message}`,
+)
+
 func main() {
 
 	config, _ := goconfig.LoadConfigFile("conf/game.ini")
 	ip, _ := config.GetValue("tcp", "ip")
 	port, _ := config.GetValue("tcp", "port")
 	port_int, _ := strconv.Atoi(port)
+
+	log_file_path, _ := config.GetValue("log", "file")
+
+	log_file, _ := os.OpenFile(log_file_path, os.O_WRONLY, 0666)
+	backend1 := logging.NewLogBackend(log_file, "", 0)
+	backend2 := logging.NewLogBackend(os.Stderr, "", 0)
+
+	backend2Formatter := logging.NewBackendFormatter(backend2, log_format)
+	backend1Leveled := logging.AddModuleLevel(backend1)
+	backend1Leveled.SetLevel(logging.INFO, "")
+
+	logging.SetBackend(backend1Leveled, backend2Formatter)
 
 	server = &Server{};
 	go server.Run(ip, uint32(port_int))
@@ -46,16 +63,16 @@ func main() {
 	init_js();
 	vm.Run(`onStart();`)
 
-	log.Println(strconv.Itoa(os.Getpid()) + " start finished!")
+	log.Info(strconv.Itoa(os.Getpid()) + " start finished!")
 	time.Sleep(time.Hour * 1)
 }
 
 func init_js() {
-	log.Println("restart js vm")
+	log.Info("restart js vm")
 	main_js := ""
 
 	if data, err := ioutil.ReadFile("./scripts/main.js"); err != nil {
-		log.Println("not find main.js")
+		log.Info("not find main.js")
 		os.Exit(-1);
 	} else {
 		main_js = string(data);
@@ -76,7 +93,7 @@ func init_js() {
 	})
 	vm.Set("log", func(call otto.FunctionCall) otto.Value {
 		msg := call.Argument(0).String()
-		log.Println(msg)
+		log.Info(msg)
 		return otto.Value{}
 	})
 	vm.Set("exit", func(call otto.FunctionCall) otto.Value {
@@ -87,14 +104,14 @@ func init_js() {
 		fd, _ := strconv.Atoi(call.Argument(0).String())
 		msg := call.Argument(0).String()
 
-		log.Println("SendTo:", fd, msg)
+		log.Info("SendTo:", fd, msg)
 		hall.SendToFd(fd, msg)
 
 		return otto.Value{}
 	})
 	vm.Set("fdToIp", func(call otto.FunctionCall) otto.Value {
 		msg := call.Argument(0).String()
-		log.Println(msg)
+		log.Info(msg)
 		return otto.Value{}
 	})
 	vm.Run(main_js);
@@ -105,7 +122,7 @@ func signalListen() {
 	signal.Notify(c)
 	for {
 		s := <-c
-		log.Println("on signal:" + s.String())
+		log.Info("on signal:" + s.String())
 		if s == syscall.SIGUSR2 {
 			init_js();
 		} else {
