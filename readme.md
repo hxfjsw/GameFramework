@@ -19,7 +19,7 @@ bash build.sh
 ```
 
 #### 配置方法
-修改 conf/game.ini **文件**
+修改 conf/game.ini 文件
 ```
 [log]
 file = ./logs/common.log
