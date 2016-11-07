@@ -35,8 +35,8 @@ var hall Room
 func main() {
 
 	config, _ := goconfig.LoadConfigFile("conf/game.ini")
-	ip, _ := config.GetValue("net", "ip")
-	port, _ := config.GetValue("net", "port")
+	ip, _ := config.GetValue("tcp", "ip")
+	port, _ := config.GetValue("tcp", "port")
 	port_int, _ := strconv.Atoi(port)
 
 	server = &Server{};

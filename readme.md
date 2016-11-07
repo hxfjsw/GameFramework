@@ -9,7 +9,7 @@ go get
 #### 配置方法
 修改 conf/game.ini 文件
 ```
-[socket]
+[tcp]
 ip = 0.0.0.0
 port = 2001
 
