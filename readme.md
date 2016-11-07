@@ -1,3 +1,5 @@
+# 异步、并行、高性能、可热更新的网络通信引擎
+
 ## 架构
 - 利用Golang超强的并发网络处理能力去处理网络层的业务,用js处理业务逻辑以实现热更新
 - 热更新的方法就是向进程发送 signal-usr2
@@ -17,7 +19,7 @@ bash build.sh
 ```
 
 #### 配置方法
-修改 conf/game.ini 文件
+修改 conf/game.ini **文件**
 ```
 [log]
 file = ./logs/common.log
