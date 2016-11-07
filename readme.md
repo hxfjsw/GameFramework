@@ -28,14 +28,23 @@ funtion onStart()
 function onShutdown()
 ```
 - 当收到一个连接
-
+```
+function onConnect(fd)
+```
 - 当收到网络消息
-
+```
+function onMessage(fd,msg)
+```
 - 当一个连接关闭
+function onClose(fd)
 
 #### 主动调用函数
 
 - 指定时间后调用函数
-
+```
+timer_after(ms,func)
+```
 - 设置一个间隔时间定时器
-
+```
+timer_tick(ms,func)
+```
