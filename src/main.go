@@ -62,7 +62,11 @@ func main() {
 	go signalListen();
 
 	init_js();
-	vm.Run(`onStart();`)
+
+	if _, err := vm.Run(`onStart();`); err != nil {
+		log.Error(err)
+		os.Exit(-2)
+	}
 
 	log.Info(strconv.Itoa(os.Getpid()) + " start finished!")
 	time.Sleep(time.Hour * 1)
@@ -115,7 +119,9 @@ func init_js() {
 		log.Info(msg)
 		return otto.Value{}
 	})
-	vm.Run(main_js);
+	if _, err := vm.Run(main_js); err != nil {
+		log.Error(err.Error())
+	};
 }
 
 func signalListen() {
@@ -127,7 +133,9 @@ func signalListen() {
 		if s == syscall.SIGUSR2 {
 			init_js();
 		} else {
-			vm.Run(`onShutdown();`)
+			if _, err := vm.Run(`onShutdown();`); err != nil {
+				log.Error(err)
+			}
 		}
 	}
 }
