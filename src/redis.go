@@ -6,18 +6,25 @@ type Redis struct {
 	Conn redis.Conn
 }
 
-func (this *Redis)get(key string) (string, error) {
-	rst, err := this.Conn.Do("get", key)
-	return rst.(string), err;
+func (this *Redis)get(key string) (string ,error) {
+	rst, err := this.Conn.Do("GET", key)
+	return redis.String(rst, err)
 }
 
 func (this *Redis)set(key string, value interface{}) (string, error) {
-	rst, err := this.Conn.Do("set " + value.(string), key)
-	return rst.(string), err;
+
+	if rst, err := this.Conn.Do("SET", key, value.(string)); err != nil {
+		log.Error(err.Error())
+		return redis.String(rst, err)
+	} else {
+		return redis.String(rst, err)
+	}
+
 }
 
-func NewRedis(ip string, port string) (Redis, error) {
+func NewRedis(ip string, port string) (*Redis, error) {
 	if c, err := redis.Dial("tcp", ip + ":" + port); err != nil {
+		log.Error(err.Error())
 		return nil, err
 	} else {
 		p := &Redis{Conn:c}
