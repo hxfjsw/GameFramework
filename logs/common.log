@@ -1,0 +1,12 @@
+restart js vm
+14:50:36.220 init_js > INFO 001[0m restart js vm
+starting.....
+14:50:36.221 func3 > INFO 002[0m starting.....
+71190 start finished!
+14:50:36.221 main > INFO 003[0m 71190 start finished!
+tick clock!!
+14:50:37.225 func3 > INFO 004[0m tick clock!!
+on signal:interrupt
+14:50:37.826 signalListen > INFO 005[0m on signal:interrupt
+onShutdown
+14:50:37.827 func3 > INFO 006[0m onShutdown

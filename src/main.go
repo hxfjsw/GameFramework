@@ -50,11 +50,12 @@ func main() {
 	backend1 := logging.NewLogBackend(log_file, "", 0)
 	backend2 := logging.NewLogBackend(os.Stderr, "", 0)
 
-	backend2Formatter := logging.NewBackendFormatter(backend2, log_format)
+	logging.NewBackendFormatter(backend1, log_format)
+	backend1Formatter := logging.NewBackendFormatter(backend2, log_format)
 	backend1Leveled := logging.AddModuleLevel(backend1)
 	backend1Leveled.SetLevel(logging.INFO, "")
 
-	logging.SetBackend(backend1Leveled, backend2Formatter)
+	logging.SetBackend(backend1Leveled, backend1Formatter)
 
 	server = &Server{};
 	go server.Run(ip, uint32(port_int))

@@ -9,9 +9,24 @@ go get
 #### 配置方法
 修改 conf/game.ini 文件
 ```
+[log]
+file = ./logs/common.log
+level = DEBUG
+
+[javascript]
+file = ./scripts/main.js
+
+[http]
+ip = 0.0.0.0
+port = 80
+
 [tcp]
 ip = 0.0.0.0
 port = 2001
+
+[websocket]
+ip = 0.0.0.0
+port = 2002
 
 [mysql]
 ip = 127.0.0.1
