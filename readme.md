@@ -1,3 +1,5 @@
+
+
 #### 配置方法
 修改 conf/game.ini 文件
 ```
@@ -42,17 +44,25 @@ function onClose(fd)
 
 - 指定时间后调用函数
 ```
-timer_after(ms,func)
+function timer_after(ms,func)
 ```
 - 设置一个间隔时间定时器
 ```
-timer_tick(ms,func)
+function timer_tick(ms,func)
 ```
 - 向某个网络连接发送消息
 ```
-sendToFd(fd,msg)
+function sendToFd(fd,msg)
 ```
 - 全服广播一个消息
 ```
-boardcast(msg)
+function boardcast(msg)
+```
+- 主动关闭服务器
+```
+function exit()
+```
+- 打印一条日志
+```
+function log(msg)
 ```
