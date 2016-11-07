@@ -17,14 +17,18 @@ func timer_tick(ttl time.Duration, fun string) {
 	for {
 		select {
 		case <-timer1.C:
-			vm.Run(fun)
+			if _, err := vm.Run(fun); err != nil {
+				log.Error(err)
+			}
 		}
 	}
 }
 
 func timer_after(ttl time.Duration, fun string) {
 	time.Sleep(time.Millisecond * ttl)
-	vm.Run(fun)
+	if _, err := vm.Run(fun); err != nil {
+		log.Error(err)
+	}
 }
 
 var vm *otto.Otto;
