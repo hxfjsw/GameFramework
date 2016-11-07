@@ -240,7 +240,6 @@ tick clock!!
 tick clock!!
 tick clock!!
 tick clock!!
-ck!!
 tick clock!!
 tick clock!!
 tick clock!!
@@ -258,8 +257,9 @@ tick clock!!
 tick clock!!
 tick clock!!
 tick clock!!
-tick clock!!
-tick clock!!
+on signal:hangup
+onShutdown
+!!
 tick clock!!
 tick clock!!
 tick clock!!

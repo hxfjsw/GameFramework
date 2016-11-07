@@ -55,6 +55,24 @@ func init_js() {
 		log.Info(msg)
 		return otto.Value{}
 	})
+
+	vm.Set("redis_get", func(call otto.FunctionCall) otto.Value {
+		key := call.Argument(0).String()
+		rst, _ := my_redis.get(key)
+		result, _ := vm.ToValue(rst)
+		return result
+	})
+
+	if err := vm.Set("redis_set", func(call otto.FunctionCall) otto.Value {
+		key := call.Argument(0).String()
+		value := call.Argument(1).String()
+		rst, _ := my_redis.set(key, value)
+		result, _ := vm.ToValue(rst)
+		return result
+	}); err != nil {
+		log.Error(err.Error())
+	}
+
 	if _, err := vm.Run(main_js); err != nil {
 		log.Error(err.Error())
 	};
