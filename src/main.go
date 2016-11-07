@@ -40,6 +40,8 @@ var log_format = logging.MustStringFormatter(
 	`%{color}%{time:15:04:05.000} %{shortfunc} > %{level:.4s} %{id:03x}%{color:reset} %{message}`,
 )
 
+var my_redis *Redis;
+
 func main() {
 
 	config, _ := goconfig.LoadConfigFile("conf/game.ini")
@@ -71,16 +73,17 @@ func main() {
 		os.Exit(-2)
 	}
 
+	redis_ip, _ := config.GetValue("redis", "ip")
+	redis_port, _ := config.GetValue("redis", "port")
+	my_redis, _ = NewRedis(redis_ip, redis_port);
+
 	http_ip, _ := config.GetValue("http", "ip")
 	http_port, _ := config.GetValue("http", "port")
+	log.Info(strconv.Itoa(os.Getpid()) + " start finished!")
 
 	HttpRun(http_ip, http_port);
 
-	log.Info(strconv.Itoa(os.Getpid()) + " start finished!")
-
-	time.Sleep(time.Hour * 1)
 }
-
 
 func signalListen() {
 	c := make(chan os.Signal)
