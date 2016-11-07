@@ -3,8 +3,13 @@
 热更新的方法就是向进程发送 signal-usr2
 
 ## 安装方法
+```
 yum install go
-go get 
+go get github.com/robertkrimen/otto
+go get github.com/Unknwon/goconfig
+go get github.com/robertkrimen/otto
+bash build.sh
+```
 
 #### 配置方法
 修改 conf/game.ini 文件
