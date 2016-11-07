@@ -53,6 +53,8 @@ function onClose(fd) {
 
 
 function onRequest(request) {
+    redis_set("foo", "test")
+    log("foo=" + redis_get("foo"));
+
     return "http recv :" + request;
-    console.log(request)
 }
