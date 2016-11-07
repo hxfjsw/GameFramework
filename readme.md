@@ -1,7 +1,7 @@
 #### 配置方法
 修改 conf/game.ini 文件
 ```
-[net]
+[socket]
 ip = 0.0.0.0
 port = 2001
 
@@ -27,7 +27,7 @@ funtion onStart()
 ```
 function onShutdown()
 ```
-- 当收到一个连接
+- 当收到一个网络连接
 ```
 function onConnect(fd)
 ```
@@ -47,4 +47,12 @@ timer_after(ms,func)
 - 设置一个间隔时间定时器
 ```
 timer_tick(ms,func)
+```
+- 向某个网络连接发送消息
+```
+sendToFd(fd,msg)
+```
+- 全服广播一个消息
+```
+boardcast(msg)
 ```
