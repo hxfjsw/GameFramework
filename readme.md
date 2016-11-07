@@ -14,7 +14,7 @@
 yum install go
 go get github.com/robertkrimen/otto
 go get github.com/Unknwon/goconfig
-go get github.com/robertkrimen/otto
+go get github.com/op/go-logging
 bash build.sh
 ```
 
@@ -73,6 +73,11 @@ function onMessage(fd,msg)
 - 当一个连接关闭
 ```
 function onClose(fd)
+```
+- 收到一个HTTP请求
+```
+function onRequest(request) (result string)
+返回一个string类型 直接发回给浏览器
 ```
 
 #### 主动调用函数
