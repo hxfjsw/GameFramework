@@ -72,7 +72,13 @@ func main() {
 		os.Exit(-2)
 	}
 
+	http_ip, _ := config.GetValue("http", "ip")
+	http_port, _ := config.GetValue("http", "port")
+
+	HttpRun(http_ip, http_port);
+
 	log.Info(strconv.Itoa(os.Getpid()) + " start finished!")
+
 	time.Sleep(time.Hour * 1)
 }
 

@@ -52,3 +52,7 @@ function onClose(fd) {
 }
 
 
+function onRequest(request) {
+    return "http recv :" + request;
+    console.log(request)
+}
